@@ -6,11 +6,15 @@
 
 <body>
 	<h1>Result</h1>
-	<% if @hash %>
-		<p><%= @hash[:first] %> <%= @hash[:method] %> <%= @hash[:second] %> = <%= @hash[:result] %></p>
+	<% if @result %>
+		<p><%= @result %></p>
 	<% else %>
 		<p>No results to display.</p>
 	<% end %>
+	<form action="/save" method="post">
+		<input type="hidden" name="result" value="<%= @result %>"></input>
+		<button type="submit">Save result</button>
+	</form>
 	<p><a href="/">Back to the calculator</a></p>
 </body>
 </html>

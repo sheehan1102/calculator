@@ -1,76 +1,22 @@
 require 'sinatra'
-require 'sinatra/reloader'
+require 'sinatra/reloader' if development?
+require 'yaml/store'
+require 'pry'
 require_relative "lib/calculator"
 
 get "/" do
+	@result = Calculator.new.load_result
 	erb :home
 end
 
-get "/add" do
-	erb :add
+post "/save" do
+	Calculator.new.save(params[:result])
+	redirect to("/")
 end
 
-get "/subtract" do
-	erb :subtract
-end
-
-get "/multiply" do
-	erb :multiply
-end
-
-get "/divide" do
-	erb :divide
-end
-
-post "/calculate_add" do
-	first = params[:first_number].to_f
-	second = params[:second_number].to_f
-	result = Calculator.new.add(first, second)
-	@hash = {
-		:first => first,
-		:second => second,
-		:result => result,
-		:method => '+'
-	}
-	erb :result
-end
-
-post "/calculate_subtract" do
-	first = params[:first_number].to_f
-	second = params[:second_number].to_f
-	result = Calculator.new.subtract(first, second)
-	@hash = {
-		:first => first,
-		:second => second,
-		:result => result,
-		:method => '-'
-	}
-	erb :result
-end
-
-post "/calculate_multiply" do
-	first = params[:first_number].to_f
-	second = params[:second_number].to_f
-	result = Calculator.new.multiply(first, second)
-	@hash = {
-		:first => first,
-		:second => second,
-		:result => result,
-		:method => '*'
-	}
-	erb :result
-end
-
-post "/calculate_divide" do
-	first = params[:first_number].to_f
-	second = params[:second_number].to_f
-	result = Calculator.new.divide(first, second)
-	@hash = {
-		:first => first,
-		:second => second,
-		:result => result,
-		:method => '/'
-	}
+post "/result" do
+	calculator = Calculator.new(params)
+	@result = calculator.math
 	erb :result
 end
 

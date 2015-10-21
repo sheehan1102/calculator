@@ -6,12 +6,21 @@
 
 <body>
 	<h1>Welcome to the Online Calculator!</h1>
-	<p>What would you like to do?</p>
-	<ol>
-		<li><p><a href="/add">Add</li>
-		<li><p><a href="/subtract">Subtract</a></p></li>
-		<li><p><a href="/multiply">Multiply</a></p></li>
-		<li><p><a href="/divide">Divide</a></p></li>
-	</ol>
+	<form action="/result" method="post">
+		<!-- <label for="first-number">First Number:</label> -->
+		<% if @result %>
+			<input type="number" id="first-number" value="<%= @result.to_f %>" name="first_number"></input>
+		<% else %>
+			<input type="number" id="first-number" name="first_number" placeholder="1st number"></input>
+		<% end %>
+		and
+		<!-- <label for="second-number">Second Number:</label> -->
+		<input type="number" id="second-number" name="second_number" placeholder="2nd number"></input>
+
+		<button type="submit" name="operation" value="add">Add</button>
+		<button type="submit" name="operation" value="subtract">Subtract</button>
+		<button type="submit" name="operation" value="multiply">Multiply</button>
+		<button type="submit" name="operation" value="divide">Divide</button>
+	</form>
 </body>
 </html>
